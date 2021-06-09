@@ -26,11 +26,3 @@
 3. Build image: `docker build -t myapache2-mypage .`
 4. Run container: `docker run -p 8081:80 -d myapache2-mypage`
 5. Check your web page: `http://localhost:8081/mypage/`
-
-## Task3: Run Node.js webapp in a container
-
-Your task is to write a Dockerfile that will create a container with node.js webapp. The webapp should be accessible via `http://localhost:8080`. A few hints for you:
-- all application files are located in "app" directory from this lab
-- for base image use node from dockerhub: [https://hub.docker.com/node/](https://hub.docker.com/_/node/) (version 10)
-- `package.json` is a file that defines all dependencies for Node.js app. In order to install them run `npm install` in a directory where `package.json` is located
-- in order to start the app run `node server.js`
