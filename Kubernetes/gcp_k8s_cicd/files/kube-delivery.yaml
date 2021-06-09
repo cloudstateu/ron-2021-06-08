@@ -1,0 +1,28 @@
+# [CD]
+steps:
+# Deployment nowej wersji obrazu kontenera na klaster Kubernetes Engine - kube-cicd.
+- name: 'gcr.io/cloud-builders/kubectl'
+  id: Deploy
+  args:
+  - 'apply'
+  - '-f'
+  - 'kubernetes.yaml'
+  env:
+  - 'CLOUDSDK_COMPUTE_ZONE=europe-west1-b'
+  - 'CLOUDSDK_CONTAINER_CLUSTER=kube-cicd'
+
+# Po udanym deployment kopiowany jest manifest na branch - testing. COMMIT_SHA jest automatycznie ustawiany przez Cloud Build.
+- name: 'gcr.io/cloud-builders/git'
+  id: Copy to testing branch
+  entrypoint: /bin/sh
+  args:
+  - '-c'
+  - |
+    set -x && \
+    git config user.email $(gcloud auth list --filter=status:ACTIVE --format='value(account)') && \
+    git fetch origin testing && git checkout testing && \
+    git checkout $COMMIT_SHA kubernetes.yaml && \
+    git commit -m "Manifest from commit $COMMIT_SHA
+    $(git log --format=%B -n 1 $COMMIT_SHA)" && \
+    git push origin testing
+# [CD]

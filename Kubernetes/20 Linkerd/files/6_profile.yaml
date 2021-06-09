@@ -1,0 +1,12 @@
+apiVersion: linkerd.io/v1alpha2
+kind: ServiceProfile
+metadata:
+  name: versions-app-error.simple-service.svc.cluster.local
+  namespace: simple-service
+spec:
+  routes:
+    - condition:
+        method: GET 
+        pathRegex: /
+      name: GET /
+      isRetryable: true 

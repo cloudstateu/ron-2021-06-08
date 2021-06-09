@@ -1,0 +1,26 @@
+#set the variables
+rg=wrocom01rg
+aksname=wroaks01mf
+acrname=wroacr01mf
+
+#create azure container registry
+az acr create -g mfaks01rg -n mfaks01cr --sku Basic
+
+az acr update -n mfaks01cr --admin-enabled true
+
+KF=x8g8Yse6gqUBONpim21juyFzVMvpE
+
+#create a secret
+kubectl create secret docker-registry regcredpwc --docker-server=k8slab02vncr.azurecr.io --docker-username=k8slab02vncr --docker-password=KF=x8g8Yse6gqUBONpim21juyFzVMvpE --docker-email=mifurm@cloudarchitects.pl
+
+#push images
+docker tag mbank.salesbook.lb mfaks01cr.azurecr.io/mbank.salesbook.lb
+docker tag mbank.salesbook.web mfaks01cr.azurecr.io/mbank.salesbook.web
+
+docker login mfaks01cr.azurecr.io
+
+docker push mfaks01cr.azurecr.io/mbank.salesbook.lb 
+docker push mfaks01cr.azurecr.io/mbank.salesbook.web
+
+#deployment
+kubectl apply -f deployment.yaml

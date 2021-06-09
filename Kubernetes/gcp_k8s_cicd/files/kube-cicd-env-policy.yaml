@@ -1,0 +1,4 @@
+bindings:
+- members:
+  - serviceAccount:<PROJECT_NUMBER>@cloudbuild.gserviceaccount.com
+  role: roles/source.writer

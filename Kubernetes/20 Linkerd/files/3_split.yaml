@@ -1,0 +1,15 @@
+apiVersion: split.smi-spec.io/v1alpha1
+kind: TrafficSplit
+metadata:
+  name: my-trafficsplit
+  namespace: simple-service
+spec:
+  # The root service that clients use to connect to the destination application.
+  service: versions-app1
+  # Services inside the namespace with their own selectors, endpoints and configuration.
+  backends:
+  - service: versions-app1
+    weight: 80
+  - service: versions-app2
+    weight: 20
+---

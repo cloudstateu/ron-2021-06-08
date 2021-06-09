@@ -1,0 +1,26 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress
+  annotations:
+    nginx.ingress.kubernetes.io/ssl-redirect: "false"
+    cert-manager.io/issuer: selfsigned-issuer
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "false"
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  tls:
+  - hosts:
+    - demo.cm.com
+    secretName: my-selfsigned-cert
+  rules:
+   - host: demo.cm.com
+     http:
+      paths:
+        - path: /srv1
+          backend:
+            serviceName: service1-service
+            servicePort: 5678
+        - path: /srv2
+          backend:
+            serviceName: service2-service
+            servicePort: 5678
