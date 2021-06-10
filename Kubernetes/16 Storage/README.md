@@ -25,7 +25,7 @@
    kubectl describe sc managed-premium
    ```
 
-1. Create PersistanceVolumeClaim with Azure Files storage class
+1. Create a file using `nano pvc.yaml` with following content:
 
    ```yaml
    apiVersion: v1
@@ -40,6 +40,10 @@
        requests:
          storage: 10Gi
    ```
+1. Create a Persistant Volume Claim:
+```
+kubectl apply -f pvc.yaml
+```
 
 1. Using the command below check if the PVC was created. Copy the name of PVC.
 
@@ -47,7 +51,7 @@
    kubectl get pvc
    ```
 
-1. Create new Deployment with container using Azure Files PVC
+1. Create new Deployment file: `nano deployment.yaml` with content:
 
    ```yaml
    apiVersion: apps/v1
@@ -79,6 +83,11 @@
              persistentVolumeClaim:
                claimName: azurefile
    ```
+   
+1. Create a deployment:
+```
+kubectl apply -f deployment.yaml
+```
 
 1. Create a new file in Azure Files (using Portal).
 
