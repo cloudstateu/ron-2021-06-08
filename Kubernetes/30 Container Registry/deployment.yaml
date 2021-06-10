@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: salesbookweb
-        image: st15acr.azurecr.io/salesbook:latest
+        image: st20registryron.azurecr.io/salesbook:latest
         ports:
         - containerPort: 80
       imagePullSecrets:
